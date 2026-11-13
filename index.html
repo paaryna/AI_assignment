@@ -35,6 +35,7 @@
         let score = 0;
         let gameOver = false;
         let canTurn = true;
+        let gameInterval = setInterval(moveSnake, 100);
 
         // ===== DRAWING =====
         const drawGame = () => {
@@ -87,6 +88,8 @@
             if(head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount || hitsBody) {
                 gameOver = true;
                 alert("Game Over! Your score: " + score);
+
+            
                 snake = [
                     { x: 10, y: 10 },
                     { x: 9, y: 10 },
@@ -94,6 +97,8 @@
                 ];
                 direction = { x: 1, y: 0 };
                 score = 0;
+                clearInterval(gameInterval);
+                gameInterval = setInterval(moveSnake, 100 - score);
                 placeFood();
                 return;
             
@@ -103,7 +108,10 @@
 
             if (food.x === head.x && food.y === head.y){
                 score++;
+                clearInterval(gameInterval);
+                gameInterval = setInterval(moveSnake, 100 - score);
                 placeFood();
+
             }
             else {
                 snake.pop();
@@ -141,7 +149,7 @@
                 }
         }); 
     
-        setInterval(moveSnake, 100);
+        
         
         
     
