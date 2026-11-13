@@ -70,6 +70,9 @@
         function placeFood() {
             
             food = { x: Math.floor(Math.random() * tileCount), y: Math.floor(Math.random() * tileCount) };
+            if (snake.some(segment => segment.x === food.x && segment.y === food.y)) {
+                placeFood();
+            }
             
         }
 
@@ -133,6 +136,7 @@
                     canTurn = false;
                 } else if (event.key === "r" && gameOver) {
                     gameOver = false;
+                    canTurn = true;
                     drawGame();
                 }
         }); 
